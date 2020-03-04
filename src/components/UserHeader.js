@@ -6,12 +6,27 @@ class UserHeader extends React.Component {
   componentDidMount(){
     this.props.fetchUser(this.props.userId);
   };
+
   render (){
-    console.log(this.props.userId);
-    return (
-      <div>User Header</div>
-    )
+    const {user } = this.props;
+    // console.log(this.props.userId);
+    // .find is a built in method from javascript array
+    // const user = this.props.users.find(user => user.id === this.props.userId);
+    // if no user found return nothing
+    if (!user){
+      return null;
+    }
+    return <div className="header">{user.name}</div>
   }
 };
 
-export default connect(null, {fetchUser}) (UserHeader);
+// ownProps if from Redux Library
+// it fetches this.props.fetchUser(this.props.userId)
+const mapStateToProps = (state, ownProps) => {
+  return { user: state.users.find(user => user.id === ownProps.userId) };
+};
+
+export default connect(
+  mapStateToProps, 
+  {fetchUser}
+)(UserHeader);
