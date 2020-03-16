@@ -5,13 +5,11 @@ import { fetchUser } from '../actions';
 class UserHeader extends React.Component {
   componentDidMount(){
     this.props.fetchUser(this.props.userId);
-  };
+  }
 
-  render (){
-    const {user } = this.props;
+  render() {
+    const { user } = this.props;
     // console.log(this.props.userId);
-    // .find is a built in method from javascript array
-    // const user = this.props.users.find(user => user.id === this.props.userId);
     // if no user found return nothing
     if (!user){
       return null;
@@ -23,6 +21,7 @@ class UserHeader extends React.Component {
 // ownProps if from Redux Library
 // it fetches this.props.fetchUser(this.props.userId)
 const mapStateToProps = (state, ownProps) => {
+  // .find is a built in method from javascript array
   return { user: state.users.find(user => user.id === ownProps.userId) };
 };
 
