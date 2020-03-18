@@ -21,12 +21,18 @@ export const fetchPostsAndUsers = () => async (dispatch, getState) => {
   
   // utilizing lodash which has inner function .map 
     // to get just unique userId property which going to return an array
-  const userIds = _.uniq(_.map(getState().posts, 'userId'));
+  // const userIds = _.uniq(_.map(getState().posts, 'userId'));
 
-  userIds.forEach(id => dispatch(fetchUser(id)));
+  // userIds.forEach(id => dispatch(fetchUser(id)));
 
-  // console.log('fetched posts!', getState().posts);
-  // console.log(userIds);
+  // Another Way
+  // .chain is apart of lodash library
+  // to chain on a bunch of functions to manipulate some collections of data
+  _.chain(getState().posts)
+    .map('userId')
+    .uniq()
+    .forEach(id => dispatch(fetchUser(id)))
+    .value();  //must ends with .value in order to execute above functions
 };
 
 // GET POSTS
